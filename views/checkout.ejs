@@ -1,0 +1,36 @@
+<%- include('./partials/header') %>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div style="margin-top: 35px;" class="text-center">
+			<h2>CheckOut</h2>
+			<table class="bill table-center">
+				<tr class="bill">
+					<th class="bill">Product</th>
+					<th class="bill">Price</th>
+					<th class="bill">Quantity</th>
+					<th class="bill">Total</th>
+				</tr>
+			<% user.cart.forEach(function(cartItem){ %>
+				<tr class="bill">
+					<td class="bill"><%= cartItem.name %></td>
+					<td class="bill"><%= cartItem.price %></td>
+				    <td class="bill"><%= cartItem.quantity %></td>
+				    <td class="bill"><%= cartItem.quantity*cartItem.price %></td>
+				</tr>
+			<% }); %>
+				<tr class="bill">
+					<td class="bill">-</td>
+					<td class="bill">-</td>
+					<td class="bill">-</td>
+					<td class="bill"><%= total %></td>
+				</tr>
+			</table>
+			<form action="/<%= user.id %>/checkout" method="POST">
+				<button class="btn btn-success btn-md">Place Order</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<%- include('./partials/footer') %>

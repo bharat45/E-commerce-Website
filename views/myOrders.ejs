@@ -1,0 +1,43 @@
+<%- include('./partials/header') %>
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+	<% if(user.orders.length == 0) { %>
+		<h3 class="text-center">No Orders</h3>
+	<% } %>
+	<% user.orders.forEach(function(order){ %>
+	<h2><%= moment(order.createdAt).format('LL') %></h2>
+	<hr>
+	<% var total = 0; %>
+		<div style="margin-bottom: 20px;" class="row">
+			<div class="col-md-12">
+				<table class="bill table-center">
+					<tr class="bill">
+						<th class="bill">Product</th>
+						<th class="bill">Price</th>
+						<th class="bill">Quantity</th>
+						<th class="bill">Total</th>
+					</tr>
+			<% order.order.forEach(function(item){ %>
+					<tr class="bill">
+						<td class="bill"><%= item.product %></td>
+						<td class="bill"><%= item.price %></td>
+					    <td class="bill"><%= item.quantity %></td>
+					    <td class="bill"><%= item.quantity*item.price %></td>
+					</tr>
+			<% total += item.quantity*item.price %>
+			<% }); %>
+					<tr class="bill">
+						<td class="bill">-</td>
+						<td class="bill">-</td>
+						<td class="bill">-</td>
+						<td class="bill"><%= total %></td>
+					</tr>
+				</table>
+			</div>
+		</div>	
+	<% }); %>
+</div>
+</div>
+
+<%- include('./partials/footer') %>

@@ -1,0 +1,62 @@
+<%- include('./partials/header') %>
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+	<% if(user.cart.length > 0) { %>
+	<div class="text-right">
+			<a class="btn btn-success" href="/<%= user.id %>/cart/checkout" style="margin-top: 15px; margin-right: 15px">Proceed</a>
+	</div>
+	<% } else { %>
+		<h3 class="text-center">No Item In Added!</h3>
+	<% } %>
+	<hr>
+	
+		<div style="margin-bottom: 20px;" class="row">
+			<div class="col-md-12">
+				<table class="table-center" style="background: transparent;">
+				<% if(user.cart.length > 0) { %>
+					<tr class="cart-table">
+						<th class="cart-table">Product</th>
+						<th class="cart-table">Price</th>
+						<th class="cart-table">Quantity</th>
+						<th class="cart-table">Total</th>
+						<th class="cart-table"><th>
+					</tr>
+				<% } %>
+					<% user.cart.forEach(function(cartItem){ %>
+					<tr class="cart-table">
+						<td class="cart-table"><%= cartItem.name %></td>
+						<td class="cart-table"><%= cartItem.price %></td>
+						<td class="cart-table">
+					    <form action="/<%= user.id %>/<%= cartItem.id %>/qtyChange?_method=PUT" method="POST">
+							<select id="cartItemQty" style="width: 40px;" type="number" name="cartItem[quantity]" onchange="this.form.submit()">
+							<option disabled selected><%= cartItem.quantity %></option>
+		                    <option>1</option>
+		                    <option>2</option>
+		                    <option>3</option>
+		                    <option>4</option>
+		                    <option>5</option>
+		                    <option>6</option>
+		                    <option>7</option>
+		                    <option>8</option>
+		                    <option>9</option>
+		                    <option>10</option>
+		                	</select>
+						</form>
+						</td>
+					    <td class="cart-table"><%= cartItem.quantity*cartItem.price %></td>
+					    <td class="cart-table">
+					    	<form id="delete-form" action="/<%= user.id %>/cart/<%= cartItem.id %>?_method=DELETE" method="POST">
+								<button style="display: inline;" class="btn btn-danger btn-xs">Delete</button>
+							</form>
+						</td>
+					</tr>
+					<% }); %>
+				</table>
+			</div>
+		</div>	
+	
+</div>
+</div>
+
+<%- include('./partials/footer') %>
