@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+<div>
+<h1 class="text-center">Orders</h1>
+<hr>
+<% var i = 1; %>
+<% orders.forEach(function(order){ %>
+<h3>Order Number: <%= i %> (<%= moment(order.createdAt).format('LL') %>) (<%= moment(order.createdAt).format("hh:mm") %>)</h3>
+<h5>Name: <%= order.customer %></h5>
+<p>Phone Number: <%= order.phoneNumber %></p>
+<p>Adress: <%= order.houseNumber %>, <%= order.area %>, <%= order.city %>, <%= order.state %>, <%= order.country %></p>
+<table>
+	<tr>
+		<th style="padding: 10px;">Product</th>
+		<th style="padding: 10px;">Price</th>
+		<th style="padding: 10px;">Quantity</th>
+		<th style="padding: 10px;">Total</th>
+	</tr>
+	<% order.order.forEach(function(orderIn){ %>
+	<tr>
+		<td style="padding: 10px;"><%= orderIn.product %></td>
+		<td style="padding: 10px;"><%= orderIn.price %></td>
+		<td style="padding: 10px;"><%= orderIn.quantity %></td>
+		<td style="padding: 10px;"><%= orderIn.quantity*orderIn.price %></td>
+	</tr>
+	<% }); %>
+</table>
+<form style="display: inline;" action="/<%= order.id %>" method="POST">
+	<label for="packed">Packed: </label>
+	<input type="checkbox" id="packed" name="packed" required>
+	<button style="margin-left: 20px;">Delivered</button>
+</form>
+<hr>
+<% i++; %>
+<% }); %>
+</div>
+<%- include('partials/footer') %>

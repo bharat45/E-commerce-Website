@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<br>
+<br>
+<br>
+
+<form action="/products" method="GET" class="form-inline">
+	<div class="row">
+	<div class="text-center" style="width: auto;">
+		<div class="col-md-8 col-md-offset-2">
+		<input type="text" id="search" style="margin: 0; display: inline;" name="search" placeholder="search your item here." class="search-bar" list="searchresults" onchange="this.form.submit()">
+		<input type="submit" style="margin: 0; display:inline;" value="Search" class="btn btn-success">
+		<datalist id="searchresults">
+		</datalist>
+		<template id="resultstemplate">
+			<% products.forEach(function(product){ %>
+				<option> <%= product.name %> </option>
+			<% }); %>
+		</template>
+		</div>
+	</div>
+	</div>
+</form>
+
+<br>
+
+<div class="col-md-12">
+	<% if(noMatch !== undefined) { %>
+		<h3><%= noMatch %></h3>
+	<% } else { %>
+</div>
+
+<br>
+<div class="row text-center" style="display: flex; flex-wrap: wrap;">
+	<% products.forEach(function(product){ %>
+		<div class="col-md-3 col-sm-6 col-xs-6">
+			<div style="background: #D9DBCC;" class="thumbnail">
+				<a href="/products/<%= product.id %>/edit"><img class="img-fluid" id="productImage" src="<%= product.image %>"></a>
+				<div class="caption" style="padding: 0; margin-top: 8px;">
+					<h4"><strong><%= product.name %>: ₹<%= product.price %></strong></h4>
+					<form action="/products/<%= product.id %>/edit" method="GET">
+					<button style="margin: 5px; width: 80%" class="btn btn-success">EDIT</button>
+					</form>
+				</div>
+			</div>	
+		</div>
+	<% }); %>
+</div>
+
+	<% } %>
+
+<%- include('partials/footer') %>
